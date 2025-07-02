@@ -15,11 +15,11 @@ $breadcrumbs = [
     <!-- Page Header -->
     <div class="flex items-center justify-between">
         <div>
-            <h1 class="text-2xl font-bold text-neutral-900 dark:text-white">Data Mahasiswa PKL</h1>
-            <p class="text-neutral-600 dark:text-neutral-400 mt-1">Kelola data mahasiswa yang sedang melaksanakan PKL</p>
+            <h1 class="text-2xl font-bold text-neutral-900 dark:text-white">Data Siswa PKL</h1>
+            <p class="text-neutral-600 dark:text-neutral-400 mt-1">Kelola data siswa yang sedang melaksanakan PKL</p>
         </div>
         <x-button variant="primary" size="md" icon="plus">
-            Tambah Mahasiswa
+            Tambah Siswa
         </x-button>
     </div>
 

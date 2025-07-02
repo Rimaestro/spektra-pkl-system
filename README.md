@@ -2,9 +2,8 @@
 
 ## A. Tempat Penelitian
 
-**Lokasi**: Universitas/Institut Teknologi [Nama Institusi]
-- Program Studi Teknik Informatika/Sistem Informasi
-- Bagian Akademik dan Kemahasiswaan
+**Lokasi**: SMK Muhammadiyah 3 Purwokerto
+- Bagian Akademik dan Kesiswaan
 - Unit Praktek Kerja Lapangan (PKL)
 
 **Objek Penelitian**: Sistem pengelolaan PKL yang saat ini masih manual/semi-manual
@@ -13,18 +12,18 @@
 
 ### Sistem Lama (Manual/Semi-Manual):
 1. **Pendaftaran PKL**
-   - Mahasiswa mengisi formulir manual
+   - Siswa mengisi formulir manual
    - Mengumpulkan berkas fisik ke bagian akademik
    - Verifikasi manual oleh admin
 
 2. **Penempatan PKL**
-   - Mahasiswa mencari tempat PKL sendiri
+   - Siswa mencari tempat PKL sendiri
    - Pengajuan surat pengantar manual
    - Koordinasi via telepon/email terpisah
 
 3. **Monitoring**
    - Laporan progress manual
-   - Kunjungan dosen pembimbing tidak terjadwal
+   - Kunjungan guru pembimbing tidak terjadwal
    - Komunikasi via WhatsApp/telepon
 
 4. **Evaluasi**
@@ -56,30 +55,30 @@
 ## C. Job Description
 
 ### 1. Administrator Sistem
-- Mengelola data master (mahasiswa, dosen, perusahaan)
+- Mengelola data master (Siswa, Guru, perusahaan)
 - Memverifikasi dokumen dan pendaftaran
 - Monitoring sistem secara keseluruhan
 - Generate laporan dan statistik
 
 ### 2. Koordinator PKL
-- Mengelola penempatan mahasiswa
+- Mengelola penempatan Siswa
 - Koordinasi dengan perusahaan mitra
 - Monitoring progress PKL
 - Evaluasi dan penilaian
 
-### 3. Dosen Pembimbing
-- Membimbing mahasiswa PKL
+### 3. Guru Pembimbing
+- Membimbing Siswa PKL
 - Memberikan penilaian
 - Monitoring progress melalui sistem
 - Komunikasi dengan pembimbing lapangan
 
 ### 4. Pembimbing Lapangan (Perusahaan)
-- Membimbing mahasiswa di tempat PKL
+- Membimbing Siswa di tempat PKL
 - Memberikan penilaian kinerja
 - Melaporkan progress ke sistem
-- Koordinasi dengan dosen pembimbing
+- Koordinasi dengan guru pembimbing
 
-### 5. Mahasiswa
+### 5. Siswa
 - Mendaftar PKL online
 - Upload dokumen dan laporan
 - Mengikuti monitoring berkala
@@ -128,7 +127,7 @@
 
 ### Control (Kontrol)
 **Masalah Saat Ini:**
-- Sulit tracking progress mahasiswa
+- Sulit tracking progress Siswa
 - Tidak ada standar penilaian
 - Monitoring tidak konsisten
 - Arsip dokumen tidak terorganisir
@@ -170,7 +169,7 @@
 ### Kebutuhan Fungsional
 
 #### 1. Manajemen User
-- **F001**: Registrasi dan login multi-role (Admin, Koordinator, Dosen, Mahasiswa, Pembimbing Lapangan)
+- **F001**: Registrasi dan login multi-role (Admin, Koordinator, Guru, Siswa, Pembimbing Lapangan)
 - **F002**: Manajemen profil user
 - **F003**: Reset password
 - **F004**: Aktivasi akun
@@ -180,7 +179,7 @@
 - **F006**: Upload dokumen persyaratan
 - **F007**: Verifikasi dokumen
 - **F008**: Penempatan PKL
-- **F009**: Matching mahasiswa dengan perusahaan
+- **F009**: Matching Siswa dengan perusahaan
 
 #### 3. Monitoring dan Laporan
 - **F010**: Input laporan harian/mingguan
@@ -191,7 +190,7 @@
 
 #### 4. Penilaian
 - **F015**: Penilaian dari pembimbing lapangan
-- **F016**: Penilaian dari dosen pembimbing
+- **F016**: Penilaian dari guru pembimbing
 - **F017**: Perhitungan nilai akhir
 - **F018**: Jadwal sidang PKL
 
@@ -203,7 +202,7 @@
 
 #### 6. Administrasi
 - **F023**: Manajemen data perusahaan
-- **F024**: Manajemen data mahasiswa
+- **F024**: Manajemen data Siswa
 - **F025**: Generate surat-surat
 - **F026**: Backup data
 

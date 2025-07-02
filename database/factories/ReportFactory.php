@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\PKL;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -21,6 +22,7 @@ class ReportFactory extends Factory
 
         return [
             'pkl_id' => PKL::factory(),
+            'user_id' => User::factory(),
             'report_type' => $reportType,
             'title' => fake()->sentence(),
             'content' => fake()->paragraphs(3, true),

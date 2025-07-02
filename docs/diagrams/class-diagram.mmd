@@ -1,0 +1,334 @@
+classDiagram
+    %% Base Laravel Classes
+    class Authenticatable {
+        <<abstract>>
+    }
+    
+    class Model {
+        <<abstract>>
+        +timestamps
+        +created_at: datetime
+        +updated_at: datetime
+        +save(): bool
+        +delete(): bool
+        +fresh(): Model
+    }
+    
+    %% Interfaces
+    class MustVerifyEmail {
+        <<interface>>
+        +hasVerifiedEmail(): bool
+        +markEmailAsVerified(): bool
+        +sendEmailVerificationNotification(): void
+    }
+    
+    %% Traits
+    class HasFactory {
+        <<trait>>
+        +factory(): Factory
+    }
+    
+    class Notifiable {
+        <<trait>>
+        +notify(): void
+        +notifications(): MorphMany
+    }
+    
+    class HasApiTokens {
+        <<trait>>
+        +createToken(): NewAccessToken
+        +tokens(): MorphMany
+    }
+    
+    %% Main Models
+    class User {
+        -id: int
+        -name: string
+        -email: string
+        -password: string
+        -role: enum
+        -nis: string
+        -nip: string
+        -phone: string
+        -address: text
+        -avatar: string
+        -status: enum
+        -last_login_at: datetime
+        -last_login_ip: string
+        -login_attempts: int
+        -locked_until: datetime
+        -password_changed_at: datetime
+        -force_password_change: bool
+        -email_verified_at: datetime
+        -remember_token: string
+        
+        +getFullNameWithRoleAttribute(): string
+        +getRoleLabel(): string
+        +getStatusLabel(): string
+        +hasRole(role: string): bool
+        +hasAnyRole(roles: array): bool
+        +isActive(): bool
+        +canLogin(): bool
+        +isAccountLocked(): bool
+        +incrementLoginAttempts(): void
+        +clearLoginAttempts(): void
+        +lockAccount(): void
+        +unlockAccount(): void
+        +updateLastLogin(): void
+        +forcePasswordChange(): void
+        +scopeByRole(query, role): Builder
+        +scopeActive(query): Builder
+        +scopeSiswa(query): Builder
+        +scopeGuru(query): Builder
+        +scopePembimbingLapangan(query): Builder
+        
+        +pkls(): HasMany
+        +supervisedPkls(): HasMany
+        +fieldSupervisedPkls(): HasMany
+        +reports(): HasMany
+        +evaluations(): HasMany
+        +sentMessages(): HasMany
+        +receivedMessages(): HasMany
+        +companies(): BelongsToMany
+        +supervisedReports(): HasManyThrough
+        +tokens(): MorphMany
+        +sessions(): HasMany
+        +activeSessions(): HasMany
+    }
+    
+    class Company {
+        -id: int
+        -name: string
+        -address: text
+        -contact_person: string
+        -phone: string
+        -email: string
+        -description: text
+        -website: string
+        -status: enum
+        -max_students: int
+        
+        +getStatusLabel(): string
+        +getStatusColorClass(): string
+        +getCompanyType(): string
+        +isActive(): bool
+        +getAvailableSlots(): int
+        +hasAvailableSlots(): bool
+        +scopeActive(query): Builder
+        
+        +pkls(): HasMany
+        +ongoingPkls(): HasMany
+        +completedPkls(): HasMany
+        +supervisors(): BelongsToMany
+    }
+    
+    class PKL {
+        -id: int
+        -user_id: int
+        -company_id: int
+        -supervisor_id: int
+        -field_supervisor_id: int
+        -start_date: date
+        -end_date: date
+        -status: enum
+        -description: text
+        -documents: json
+        -rejection_reason: text
+        -final_score: decimal
+        -defense_date: date
+        
+        +isPending(): bool
+        +isApproved(): bool
+        +isRejected(): bool
+        +isOngoing(): bool
+        +isCompleted(): bool
+        +getStatusLabel(): string
+        +getStatusColorClass(): string
+        +calculateDuration(): int
+        +getProgress(): float
+        +canBeUpdated(): bool
+        +canBeDeleted(): bool
+        +scopeByStatus(query, status): Builder
+        +scopePending(query): Builder
+        +scopeApproved(query): Builder
+        +scopeOngoing(query): Builder
+        +scopeCompleted(query): Builder
+        
+        +user(): BelongsTo
+        +company(): BelongsTo
+        +supervisor(): BelongsTo
+        +fieldSupervisor(): BelongsTo
+        +reports(): HasMany
+        +evaluations(): HasMany
+    }
+    
+    class Report {
+        -id: int
+        -pkl_id: int
+        -user_id: int
+        -report_type: enum
+        -title: string
+        -content: text
+        -file_path: string
+        -attachments: json
+        -report_date: date
+        -status: enum
+        -feedback: text
+        
+        +isDraft(): bool
+        +isSubmitted(): bool
+        +isReviewed(): bool
+        +isApproved(): bool
+        +isRejected(): bool
+        +isDaily(): bool
+        +isWeekly(): bool
+        +isMonthly(): bool
+        +isFinal(): bool
+        +getReportTypeLabel(): string
+        +getStatusLabel(): string
+        +getStatusColorClass(): string
+        +canBeEdited(): bool
+        +canBeDeleted(): bool
+        +hasAttachments(): bool
+        +getAttachmentsCount(): int
+        +scopeByType(query, type): Builder
+        +scopeByStatus(query, status): Builder
+        +scopeDraft(query): Builder
+        +scopeSubmitted(query): Builder
+        
+        +pkl(): BelongsTo
+        +user(): BelongsTo
+    }
+    
+    class Evaluation {
+        -id: int
+        -pkl_id: int
+        -evaluator_id: int
+        -evaluator_type: enum
+        -technical_score: decimal
+        -attitude_score: decimal
+        -communication_score: decimal
+        -final_score: decimal
+        -comments: text
+        -suggestions: text
+        -status: enum
+        
+        +isDraft(): bool
+        +isSubmitted(): bool
+        +isFinal(): bool
+        +isSupervisorEvaluation(): bool
+        +isFieldSupervisorEvaluation(): bool
+        +calculateFinalScore(): float
+        +updateFinalScore(): void
+        +getGradeLetter(): string
+        +getEvaluatorTypeLabel(): string
+        +getStatusColorClass(): string
+        +canBeEdited(): bool
+        +isComplete(): bool
+        +getCompletionPercentage(): float
+        +getAverageScore(): float
+        +isPassingGrade(threshold: float): bool
+        +getEvaluationWeight(): float
+        +scopeByEvaluatorType(query, type): Builder
+        +scopeSupervisorEvaluations(query): Builder
+        +scopeFieldSupervisorEvaluations(query): Builder
+        +scopeFinal(query): Builder
+        
+        +pkl(): BelongsTo
+        +evaluator(): BelongsTo
+        +student(): HasOneThrough
+        +company(): HasOneThrough
+    }
+    
+    class Message {
+        -id: int
+        -sender_id: int
+        -receiver_id: int
+        -subject: string
+        -message: text
+        -attachments: json
+        -read_at: datetime
+        -priority: enum
+        
+        +isRead(): bool
+        +isUnread(): bool
+        +markAsRead(): void
+        +markAsUnread(): void
+        +isHighPriority(): bool
+        +isNormalPriority(): bool
+        +isLowPriority(): bool
+        +getPriorityLabel(): string
+        +getPriorityColorClass(): string
+        +getPriorityBadgeClass(): string
+        +getTimeAgo(): string
+        +hasAttachments(): bool
+        +getAttachmentsCount(): int
+        +getPreview(length: int): string
+        +isSystemMessage(): bool
+        +scopeUnread(query): Builder
+        +scopeRead(query): Builder
+        +scopeConversation(query, userId1, userId2): Builder
+        +scopeLatest(query): Builder
+        +scopeByPriority(query, priority): Builder
+        +scopeHighPriority(query): Builder
+        
+        +sender(): BelongsTo
+        +receiver(): BelongsTo
+    }
+    
+    class Notification {
+        -id: string
+        -type: string
+        -notifiable_type: string
+        -notifiable_id: int
+        -data: json
+        -read_at: datetime
+        
+        +markAsRead(): void
+        +markAsUnread(): void
+        +isRead(): bool
+        +isUnread(): bool
+        
+        +notifiable(): MorphTo
+    }
+    
+    %% Inheritance Relationships
+    Authenticatable <|-- User
+    Model <|-- Company
+    Model <|-- PKL
+    Model <|-- Report
+    Model <|-- Evaluation
+    Model <|-- Message
+    Model <|-- Notification
+    
+    %% Interface Implementation
+    User ..|> MustVerifyEmail
+    
+    %% Trait Usage
+    User ..> HasFactory
+    User ..> Notifiable
+    User ..> HasApiTokens
+    Company ..> HasFactory
+    PKL ..> HasFactory
+    Report ..> HasFactory
+    Evaluation ..> HasFactory
+    Message ..> HasFactory
+    
+    %% Associations
+    User ||--o{ PKL : "siswa memiliki"
+    User ||--o{ PKL : "guru membimbing (supervisor)"
+    User ||--o{ PKL : "pembimbing lapangan (field_supervisor)"
+    Company ||--o{ PKL : "menerima siswa"
+    
+    PKL ||--o{ Report : "memiliki laporan"
+    User ||--o{ Report : "membuat laporan"
+    
+    PKL ||--o{ Evaluation : "dievaluasi"
+    User ||--o{ Evaluation : "mengevaluasi"
+    
+    User ||--o{ Message : "mengirim (sender)"
+    User ||--o{ Message : "menerima (receiver)"
+    
+    User ||--o{ Notification : "menerima notifikasi"
+    
+    User }o--o{ Company : "pembimbing lapangan di"

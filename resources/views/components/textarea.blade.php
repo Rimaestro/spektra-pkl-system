@@ -9,6 +9,8 @@
 ])
 
 @php
+use Illuminate\Support\Str;
+
 $textareaId = $attributes->get('id', 'textarea-' . Str::random(6));
 $textareaName = $attributes->get('name', '');
 

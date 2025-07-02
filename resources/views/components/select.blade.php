@@ -9,6 +9,8 @@
 ])
 
 @php
+use Illuminate\Support\Str;
+
 $selectId = $attributes->get('id', 'select-' . Str::random(6));
 $selectName = $attributes->get('name', '');
 

@@ -6,6 +6,8 @@
 ])
 
 @php
+use Illuminate\Support\Str;
+
 $alertId = 'alert-' . Str::random(6);
 
 $typeConfig = [

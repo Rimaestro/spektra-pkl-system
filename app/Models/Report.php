@@ -16,6 +16,7 @@ class Report extends Model
      */
     protected $fillable = [
         'pkl_id',
+        'user_id',
         'report_type',
         'title',
         'content',
@@ -145,7 +146,15 @@ class Report extends Model
      */
     public function pkl()
     {
-        return $this->belongsTo(PKL::class);
+        return $this->belongsTo(PKL::class, 'pkl_id');
+    }
+
+    /**
+     * User yang membuat laporan ini
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     /**
@@ -271,11 +280,5 @@ class Report extends Model
         return $this->created_at->gt($expectedDate);
     }
 
-    /**
-     * User yang membuat laporan (melalui PKL)
-     */
-    public function user()
-    {
-        return $this->hasOneThrough(User::class, PKL::class, 'id', 'id', 'pkl_id', 'user_id');
-    }
+
 }

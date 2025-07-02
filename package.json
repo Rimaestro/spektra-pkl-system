@@ -7,6 +7,7 @@
         "dev": "vite"
     },
     "devDependencies": {
+        "@playwright/test": "^1.53.2",
         "@tailwindcss/vite": "^4.0.0",
         "axios": "^1.8.2",
         "concurrently": "^9.0.1",
@@ -15,6 +16,10 @@
         "vite": "^6.2.4"
     },
     "dependencies": {
-        "@heroicons/react": "^2.2.0"
+        "@heroicons/react": "^2.2.0",
+        "alpinejs": "^3.14.0",
+        "chart.js": "^4.4.0",
+        "dropzone": "^5.9.3",
+        "sweetalert2": "^11.14.0"
     }
 }

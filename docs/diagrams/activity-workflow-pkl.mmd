@@ -1,0 +1,216 @@
+flowchart TD
+    %% Start
+    Start([Mulai Proses PKL])
+    
+    %% Siswa Activities
+    subgraph "Siswa"
+        A1[Siswa Login ke Sistem]
+        A2[Pilih Perusahaan PKL]
+        A3[Isi Form Pendaftaran PKL]
+        A4[Upload Dokumen Persyaratan]
+        A5[Submit Pendaftaran PKL]
+        A6{Dokumen Lengkap?}
+        A7[Lengkapi Dokumen]
+        A8[Terima Notifikasi Status]
+        A9{PKL Disetujui?}
+        A10[Perbaiki Dokumen]
+        A11[Mulai PKL di Perusahaan]
+        A12[Buat Laporan Harian]
+        A13[Buat Laporan Mingguan]
+        A14[Buat Laporan Bulanan]
+        A15[Submit Laporan ke Sistem]
+        A16[Terima Feedback Laporan]
+        A17[Revisi Laporan jika Perlu]
+        A18[Buat Laporan Akhir]
+        A19[Submit Laporan Akhir]
+        A20[Terima Hasil Evaluasi]
+        A21[Selesai PKL]
+    end
+    
+    %% Koordinator Activities
+    subgraph "Koordinator PKL"
+        B1[Terima Notifikasi Pendaftaran Baru]
+        B2[Review Dokumen Pendaftaran]
+        B3{Dokumen Valid?}
+        B4[Tolak Pendaftaran]
+        B5[Kirim Alasan Penolakan]
+        B6[Setujui Pendaftaran]
+        B7[Assign Guru Pembimbing]
+        B8[Kirim Notifikasi Approval]
+        B9[Monitor Progress Semua PKL]
+        B10[Generate Laporan Sistem]
+        B11[Review Laporan Akhir]
+        B12{Laporan Akhir OK?}
+        B13[Approve Completion PKL]
+        B14[Request Revisi Laporan]
+    end
+    
+    %% Guru Pembimbing Activities
+    subgraph "Guru Pembimbing"
+        C1[Terima Notifikasi Assignment]
+        C2[Review Data Siswa]
+        C3[Komunikasi dengan Siswa]
+        C4[Monitor Progress PKL]
+        C5[Review Laporan Berkala]
+        C6{Laporan Acceptable?}
+        C7[Approve Laporan]
+        C8[Reject Laporan dengan Feedback]
+        C9[Buat Evaluasi Siswa]
+        C10[Input Nilai Technical]
+        C11[Input Nilai Attitude]
+        C12[Input Nilai Communication]
+        C13[Submit Evaluasi]
+        C14[Kunjungan ke Perusahaan]
+        C15[Dokumentasi Kunjungan]
+    end
+    
+    %% Pembimbing Lapangan Activities
+    subgraph "Pembimbing Lapangan"
+        D1[Terima Siswa PKL]
+        D2[Orientasi Siswa]
+        D3[Assign Tugas Harian]
+        D4[Monitor Aktivitas Siswa]
+        D5[Review Laporan Harian]
+        D6{Performance OK?}
+        D7[Berikan Feedback Positif]
+        D8[Berikan Feedback Perbaikan]
+        D9[Buat Evaluasi Lapangan]
+        D10[Input Penilaian Kinerja]
+        D11[Submit Evaluasi ke Sistem]
+        D12[Komunikasi dengan Guru]
+    end
+    
+    %% System Activities
+    subgraph "Sistem"
+        S1[Validasi Dokumen Otomatis]
+        S2[Generate Notifikasi]
+        S3[Update Status PKL]
+        S4[Calculate Final Score]
+        S5[Send Email Notifications]
+        S6[Log Activity]
+        S7[Backup Data]
+    end
+    
+    %% Main Flow
+    Start --> A1
+    A1 --> A2
+    A2 --> A3
+    A3 --> A4
+    A4 --> A5
+    A5 --> S1
+    S1 --> A6
+    A6 -->|Tidak| A7
+    A7 --> A4
+    A6 -->|Ya| S2
+    S2 --> B1
+    
+    %% Koordinator Review Process
+    B1 --> B2
+    B2 --> B3
+    B3 -->|Tidak Valid| B4
+    B4 --> B5
+    B5 --> S2
+    S2 --> A8
+    A8 --> A9
+    A9 -->|Ditolak| A10
+    A10 --> A3
+    
+    B3 -->|Valid| B6
+    B6 --> B7
+    B7 --> B8
+    B8 --> S3
+    S3 --> S2
+    S2 --> A8
+    A8 --> A9
+    A9 -->|Disetujui| C1
+    
+    %% Guru Assignment
+    C1 --> C2
+    C2 --> C3
+    C3 --> A11
+    
+    %% PKL Execution Phase
+    A11 --> D1
+    D1 --> D2
+    D2 --> D3
+    D3 --> A12
+    
+    %% Parallel Reporting Process
+    A12 --> A15
+    A15 --> C5
+    C5 --> C6
+    C6 -->|Tidak| C8
+    C8 --> A16
+    A16 --> A17
+    A17 --> A15
+    
+    C6 -->|Ya| C7
+    C7 --> S3
+    
+    %% Parallel Monitoring
+    A12 --> D4
+    D4 --> D5
+    D5 --> D6
+    D6 -->|Ya| D7
+    D6 -->|Tidak| D8
+    D7 --> A13
+    D8 --> A16
+    
+    %% Weekly and Monthly Reports
+    A13 --> A15
+    A15 --> A14
+    A14 --> A15
+    
+    %% Field Supervisor Evaluation
+    D4 --> D9
+    D9 --> D10
+    D10 --> D11
+    D11 --> S4
+    
+    %% Guru Evaluation
+    C4 --> C9
+    C9 --> C10
+    C10 --> C11
+    C11 --> C12
+    C12 --> C13
+    C13 --> S4
+    
+    %% Final Report Process
+    A14 --> A18
+    A18 --> A19
+    A19 --> B11
+    B11 --> B12
+    B12 -->|Tidak| B14
+    B14 --> A16
+    B12 -->|Ya| B13
+    B13 --> S4
+    S4 --> A20
+    A20 --> A21
+    
+    %% Parallel Activities
+    C3 -.-> D12
+    D12 -.-> C3
+    C4 -.-> C14
+    C14 --> C15
+    C15 --> S6
+    
+    %% System Background Processes
+    S3 -.-> S5
+    S5 -.-> S6
+    S6 -.-> S7
+    
+    %% Decision Points Styling
+    classDef decision fill:#FFE4B5,stroke:#FF8C00,stroke-width:2px
+    classDef process fill:#E6F3FF,stroke:#4169E1,stroke-width:2px
+    classDef start fill:#90EE90,stroke:#006400,stroke-width:3px
+    classDef end fill:#FFB6C1,stroke:#DC143C,stroke-width:3px
+    classDef system fill:#F0F0F0,stroke:#696969,stroke-width:2px
+    
+    class A6,A9,B3,B12,C6,D6 decision
+    class A1,A2,A3,A4,A5,A7,A8,A10,A11,A12,A13,A14,A15,A16,A17,A18,A19,A20 process
+    class B1,B2,B4,B5,B6,B7,B8,B9,B10,B11,B13,B14 process
+    class C1,C2,C3,C4,C5,C7,C8,C9,C10,C11,C12,C13,C14,C15 process
+    class D1,D2,D3,D4,D5,D7,D8,D9,D10,D11,D12 process
+    class Start start
+    class A21 end
+    class S1,S2,S3,S4,S5,S6,S7 system

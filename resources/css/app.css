@@ -69,37 +69,37 @@ body {
 }
 
 /* Custom Utility Classes */
-.surface {
+@utility surface {
   background-color: var(--color-surface);
   border: 1px solid var(--color-border-light);
 }
 
-.surface-secondary {
+@utility surface-secondary {
   background-color: var(--color-surface-secondary);
   border: 1px solid var(--color-border);
 }
 
-.text-primary {
+@utility text-primary {
   color: var(--color-text-primary);
 }
 
-.text-secondary {
+@utility text-secondary {
   color: var(--color-text-secondary);
 }
 
-.text-tertiary {
+@utility text-tertiary {
   color: var(--color-text-tertiary);
 }
 
-.shadow-soft {
+@utility shadow-soft {
   box-shadow: var(--shadow-soft);
 }
 
-.shadow-medium {
+@utility shadow-medium {
   box-shadow: var(--shadow-medium);
 }
 
-.shadow-large {
+@utility shadow-large {
   box-shadow: var(--shadow-large);
 }
 
@@ -109,11 +109,11 @@ body {
 }
 
 .card-base {
-  @apply surface rounded-xl shadow-soft transition-all duration-200;
+  @apply bg-white border border-gray-100 rounded-xl shadow-sm transition-all duration-200;
 }
 
 .input-base {
-  @apply w-full px-3 py-2 text-sm border rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent;
+  @apply w-full px-3 py-2 text-sm border rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent;
   background-color: var(--color-surface);
   border-color: var(--color-border);
   color: var(--color-text-primary);

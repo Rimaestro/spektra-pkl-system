@@ -148,7 +148,7 @@ class Evaluation extends Model
      */
     public function pkl()
     {
-        return $this->belongsTo(PKL::class);
+        return $this->belongsTo(PKL::class, 'pkl_id');
     }
 
     /**

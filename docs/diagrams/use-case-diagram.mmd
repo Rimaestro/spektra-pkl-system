@@ -1,0 +1,213 @@
+graph TB
+    %% Actors
+    Admin[👤 Admin]
+    Koordinator[👤 Koordinator PKL]
+    Guru[👤 Guru Pembimbing]
+    Siswa[👤 Siswa]
+    PembimbingLapangan[👤 Pembimbing Lapangan]
+    
+    %% System boundary
+    subgraph "SPEKTRA PKL System"
+        %% Authentication Use Cases
+        Login[Login ke Sistem]
+        Register[Registrasi Akun]
+        ResetPassword[Reset Password]
+        ChangePassword[Ubah Password]
+        UpdateProfile[Update Profil]
+        
+        %% User Management Use Cases (Admin/Koordinator)
+        ManageUsers[Kelola Data User]
+        CreateUser[Tambah User Baru]
+        UpdateUser[Update Data User]
+        DeleteUser[Hapus User]
+        ViewUserList[Lihat Daftar User]
+        
+        %% Company Management Use Cases (Admin/Koordinator)
+        ManageCompanies[Kelola Data Perusahaan]
+        CreateCompany[Tambah Perusahaan]
+        UpdateCompany[Update Data Perusahaan]
+        DeleteCompany[Hapus Perusahaan]
+        ViewCompanyList[Lihat Daftar Perusahaan]
+        
+        %% PKL Management Use Cases
+        RegisterPKL[Daftar PKL]
+        ViewPKLList[Lihat Daftar PKL]
+        ViewPKLDetail[Lihat Detail PKL]
+        UpdatePKL[Update Data PKL]
+        ApprovePKL[Approve PKL]
+        RejectPKL[Reject PKL]
+        AssignSupervisor[Assign Guru Pembimbing]
+        
+        %% Report Management Use Cases
+        CreateReport[Buat Laporan]
+        ViewReports[Lihat Laporan]
+        UpdateReport[Update Laporan]
+        SubmitReport[Submit Laporan]
+        ReviewReport[Review Laporan]
+        ApproveReport[Approve Laporan]
+        RejectReport[Reject Laporan]
+        ProvideFeedback[Berikan Feedback]
+        
+        %% Evaluation Use Cases
+        CreateEvaluation[Buat Evaluasi]
+        ViewEvaluations[Lihat Evaluasi]
+        UpdateEvaluation[Update Evaluasi]
+        SubmitEvaluation[Submit Evaluasi]
+        ViewEvaluationResults[Lihat Hasil Evaluasi]
+        
+        %% Communication Use Cases
+        SendMessage[Kirim Pesan]
+        ViewMessages[Lihat Pesan]
+        ReadMessage[Baca Pesan]
+        ReplyMessage[Balas Pesan]
+        
+        %% Monitoring Use Cases
+        ViewDashboard[Lihat Dashboard]
+        MonitorProgress[Monitor Progress PKL]
+        GenerateReports[Generate Laporan Sistem]
+        ViewStatistics[Lihat Statistik]
+        
+        %% Document Management
+        UploadDocuments[Upload Dokumen]
+        ViewDocuments[Lihat Dokumen]
+        DownloadDocuments[Download Dokumen]
+        
+        %% Notification Use Cases
+        ViewNotifications[Lihat Notifikasi]
+        MarkNotificationRead[Tandai Notifikasi Dibaca]
+    end
+    
+    %% Admin Relationships
+    Admin --> Login
+    Admin --> ManageUsers
+    Admin --> ManageCompanies
+    Admin --> ViewPKLList
+    Admin --> ViewPKLDetail
+    Admin --> ApprovePKL
+    Admin --> RejectPKL
+    Admin --> AssignSupervisor
+    Admin --> ViewReports
+    Admin --> ReviewReport
+    Admin --> ApproveReport
+    Admin --> RejectReport
+    Admin --> ViewEvaluations
+    Admin --> SendMessage
+    Admin --> ViewMessages
+    Admin --> ViewDashboard
+    Admin --> MonitorProgress
+    Admin --> GenerateReports
+    Admin --> ViewStatistics
+    Admin --> UpdateProfile
+    Admin --> ChangePassword
+    Admin --> ViewNotifications
+    
+    %% Koordinator Relationships
+    Koordinator --> Login
+    Koordinator --> ManageUsers
+    Koordinator --> ManageCompanies
+    Koordinator --> ViewPKLList
+    Koordinator --> ViewPKLDetail
+    Koordinator --> ApprovePKL
+    Koordinator --> RejectPKL
+    Koordinator --> AssignSupervisor
+    Koordinator --> ViewReports
+    Koordinator --> ReviewReport
+    Koordinator --> ApproveReport
+    Koordinator --> ViewEvaluations
+    Koordinator --> SendMessage
+    Koordinator --> ViewMessages
+    Koordinator --> ViewDashboard
+    Koordinator --> MonitorProgress
+    Koordinator --> GenerateReports
+    Koordinator --> UpdateProfile
+    Koordinator --> ChangePassword
+    Koordinator --> ViewNotifications
+    
+    %% Guru Pembimbing Relationships
+    Guru --> Login
+    Guru --> ViewPKLList
+    Guru --> ViewPKLDetail
+    Guru --> ViewReports
+    Guru --> ReviewReport
+    Guru --> ApproveReport
+    Guru --> RejectReport
+    Guru --> ProvideFeedback
+    Guru --> CreateEvaluation
+    Guru --> ViewEvaluations
+    Guru --> UpdateEvaluation
+    Guru --> SubmitEvaluation
+    Guru --> SendMessage
+    Guru --> ViewMessages
+    Guru --> ViewDashboard
+    Guru --> MonitorProgress
+    Guru --> UpdateProfile
+    Guru --> ChangePassword
+    Guru --> ViewNotifications
+    
+    %% Siswa Relationships
+    Siswa --> Login
+    Siswa --> Register
+    Siswa --> ResetPassword
+    Siswa --> RegisterPKL
+    Siswa --> ViewPKLDetail
+    Siswa --> UpdatePKL
+    Siswa --> CreateReport
+    Siswa --> ViewReports
+    Siswa --> UpdateReport
+    Siswa --> SubmitReport
+    Siswa --> ViewEvaluations
+    Siswa --> ViewEvaluationResults
+    Siswa --> SendMessage
+    Siswa --> ViewMessages
+    Siswa --> ReadMessage
+    Siswa --> ReplyMessage
+    Siswa --> ViewDashboard
+    Siswa --> UploadDocuments
+    Siswa --> ViewDocuments
+    Siswa --> DownloadDocuments
+    Siswa --> UpdateProfile
+    Siswa --> ChangePassword
+    Siswa --> ViewNotifications
+    Siswa --> MarkNotificationRead
+    
+    %% Pembimbing Lapangan Relationships
+    PembimbingLapangan --> Login
+    PembimbingLapangan --> ViewPKLList
+    PembimbingLapangan --> ViewPKLDetail
+    PembimbingLapangan --> ViewReports
+    PembimbingLapangan --> ReviewReport
+    PembimbingLapangan --> ProvideFeedback
+    PembimbingLapangan --> CreateEvaluation
+    PembimbingLapangan --> ViewEvaluations
+    PembimbingLapangan --> UpdateEvaluation
+    PembimbingLapangan --> SubmitEvaluation
+    PembimbingLapangan --> SendMessage
+    PembimbingLapangan --> ViewMessages
+    PembimbingLapangan --> ViewDashboard
+    PembimbingLapangan --> MonitorProgress
+    PembimbingLapangan --> UpdateProfile
+    PembimbingLapangan --> ChangePassword
+    PembimbingLapangan --> ViewNotifications
+    
+    %% Include Relationships
+    ManageUsers -.-> CreateUser
+    ManageUsers -.-> UpdateUser
+    ManageUsers -.-> DeleteUser
+    ManageUsers -.-> ViewUserList
+    
+    ManageCompanies -.-> CreateCompany
+    ManageCompanies -.-> UpdateCompany
+    ManageCompanies -.-> DeleteCompany
+    ManageCompanies -.-> ViewCompanyList
+    
+    ViewMessages -.-> ReadMessage
+    SendMessage -.-> ViewMessages
+    
+    CreateReport -.-> UploadDocuments
+    SubmitReport -.-> ViewNotifications
+    ApproveReport -.-> ViewNotifications
+    RejectReport -.-> ViewNotifications
+    
+    ApprovePKL -.-> AssignSupervisor
+    ApprovePKL -.-> ViewNotifications
+    RejectPKL -.-> ViewNotifications

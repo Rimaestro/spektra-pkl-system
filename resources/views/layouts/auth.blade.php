@@ -16,8 +16,31 @@
 
     <!-- Additional Styles -->
     @stack('styles')
+    
+    <style>
+        .glassmorphism {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        }
+        
+        .dark .glassmorphism {
+            background: rgba(38, 38, 38, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        
+        .theme-transition {
+            transition: all 0.5s ease;
+        }
+        
+        .theme-icon-light, .theme-icon-dark {
+            transition: opacity 0.3s ease, transform 0.5s ease;
+        }
+    </style>
 </head>
-<body class="h-full bg-neutral-50 dark:bg-neutral-900">
+<body class="h-full bg-neutral-50 dark:bg-neutral-900 theme-transition">
     <div class="min-h-full flex">
         <!-- Left side - Branding/Image -->
         <div class="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-primary-600 to-primary-800 relative overflow-hidden">
@@ -82,16 +105,16 @@
 
                 <!-- Page Title -->
                 <div class="text-center mb-8">
-                    <h2 class="text-3xl font-bold text-neutral-900 dark:text-white">
+                    <h2 class="text-3xl font-bold text-neutral-900 dark:text-white theme-transition">
                         @yield('title', 'Masuk ke Akun')
                     </h2>
-                    <p class="mt-2 text-sm text-neutral-600 dark:text-neutral-400">
+                    <p class="mt-2 text-sm text-neutral-600 dark:text-neutral-400 theme-transition">
                         @yield('subtitle', 'Silakan masuk untuk mengakses dashboard PKL Anda')
                     </p>
                 </div>
 
                 <!-- Auth Form Content -->
-                <div class="bg-white dark:bg-neutral-800 py-8 px-6 shadow-medium rounded-xl border border-neutral-200 dark:border-neutral-700">
+                <div class="glassmorphism py-8 px-6 rounded-xl theme-transition">
                     @yield('content')
                 </div>
 
@@ -103,7 +126,12 @@
                 <!-- Dark Mode Toggle -->
                 <div class="mt-8 flex justify-center">
                     <button id="theme-toggle" class="p-2 rounded-lg text-neutral-500 hover:text-neutral-700 hover:bg-neutral-100 dark:text-neutral-400 dark:hover:text-neutral-200 dark:hover:bg-neutral-700 transition-colors duration-200">
-                        <x-icon name="cog-6-tooth" size="sm" />
+                        <div class="theme-icon-light block dark:hidden">
+                            <x-icon name="sun" size="sm" />
+                        </div>
+                        <div class="theme-icon-dark hidden dark:block">
+                            <x-icon name="moon" size="sm" />
+                        </div>
                         <span class="sr-only">Toggle theme</span>
                     </button>
                 </div>

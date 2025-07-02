@@ -16,25 +16,29 @@ class UserSeeder extends Seeder
     {
         // Admin User
         User::create([
-            'name' => 'Andi Wijayanto',
+            'name' => 'Rio Mayesta',
             'email' => 'admin@spektra.ac.id',
+            'email_verified_at' => now(),
             'password' => Hash::make('password'),
             'role' => 'admin',
             'phone' => '081234567890',
             'address' => 'Jl. Merdeka No. 15, Jakarta Pusat, DKI Jakarta 10110',
             'status' => 'active',
+            'password_changed_at' => now(),
         ]);
 
         // Koordinator PKL
         User::create([
             'name' => 'Dr. Sari Indrawati, M.Kom',
             'email' => 'koordinator@spektra.ac.id',
+            'email_verified_at' => now(),
             'password' => Hash::make('password'),
             'role' => 'koordinator',
             'nip' => '197805152005012001',
             'phone' => '081298765432',
             'address' => 'Jl. Sudirman Kav. 25, Jakarta Selatan, DKI Jakarta 12920',
             'status' => 'active',
+            'password_changed_at' => now(),
         ]);
 
         // Dosen Pembimbing
@@ -158,20 +162,65 @@ class UserSeeder extends Seeder
             'status' => 'active',
         ]);
 
+        // Test users for authentication scenarios
+
+        // Unverified user for email verification testing
+        User::create([
+            'name' => 'Test Unverified User',
+            'email' => 'unverified@spektra.ac.id',
+            'email_verified_at' => null,
+            'password' => Hash::make('password'),
+            'role' => 'mahasiswa',
+            'nim' => '2021999999',
+            'phone' => '081999999999',
+            'status' => 'pending',
+        ]);
+
+        // Inactive user for status testing
+        User::create([
+            'name' => 'Test Inactive User',
+            'email' => 'inactive@spektra.ac.id',
+            'email_verified_at' => now(),
+            'password' => Hash::make('password'),
+            'role' => 'mahasiswa',
+            'nim' => '2021999998',
+            'phone' => '081999999998',
+            'status' => 'inactive',
+        ]);
+
+        // User with forced password change
+        User::create([
+            'name' => 'Test Force Password Change',
+            'email' => 'forcechange@spektra.ac.id',
+            'email_verified_at' => now(),
+            'password' => Hash::make('password'),
+            'role' => 'dosen',
+            'nip' => '199999999999999999',
+            'phone' => '081999999997',
+            'status' => 'active',
+            'force_password_change' => true,
+        ]);
+
         // Additional sample users for testing
         User::factory(15)->create([
             'role' => 'mahasiswa',
             'status' => 'active',
+            'email_verified_at' => now(),
+            'password_changed_at' => now(),
         ]);
 
         User::factory(5)->create([
             'role' => 'dosen',
             'status' => 'active',
+            'email_verified_at' => now(),
+            'password_changed_at' => now(),
         ]);
 
         User::factory(8)->create([
             'role' => 'pembimbing_lapangan',
             'status' => 'active',
+            'email_verified_at' => now(),
+            'password_changed_at' => now(),
         ]);
     }
 }

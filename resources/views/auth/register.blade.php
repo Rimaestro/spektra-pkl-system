@@ -61,9 +61,9 @@
         required 
         :error="$errors->first('role')"
         :options="[
-            'student' => 'Mahasiswa PKL',
-            'supervisor' => 'Pembimbing',
-            'company' => 'Perusahaan'
+            'mahasiswa' => 'Siswa PKL',
+            'dosen' => 'Dosen Pembimbing',
+            'pembimbing_lapangan' => 'Pembimbing Lapangan'
         ]"
     />
 

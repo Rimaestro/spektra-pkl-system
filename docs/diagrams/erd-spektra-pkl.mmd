@@ -1,0 +1,176 @@
+erDiagram
+    USERS {
+        bigint id PK "AUTO_INCREMENT"
+        string name "NOT NULL"
+        string email "UNIQUE, NOT NULL"
+        timestamp email_verified_at "NULLABLE"
+        string password "NOT NULL"
+        enum role "admin, koordinator, guru, siswa, pembimbing_lapangan"
+        string nis "UNIQUE, NULLABLE - untuk siswa"
+        string nip "UNIQUE, NULLABLE - untuk guru"
+        string phone "NULLABLE"
+        text address "NULLABLE"
+        string avatar "NULLABLE"
+        enum status "active, inactive, pending"
+        timestamp last_login_at "NULLABLE"
+        string last_login_ip "NULLABLE"
+        int login_attempts "DEFAULT 0"
+        timestamp locked_until "NULLABLE"
+        timestamp password_changed_at "NULLABLE"
+        boolean force_password_change "DEFAULT false"
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    COMPANIES {
+        bigint id PK "AUTO_INCREMENT"
+        string name "NOT NULL"
+        text address "NOT NULL"
+        string contact_person "NOT NULL"
+        string phone "NOT NULL"
+        string email "NOT NULL"
+        text description "NULLABLE"
+        string website "NULLABLE"
+        enum status "active, inactive"
+        int max_students "DEFAULT 5"
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    PKLS {
+        bigint id PK "AUTO_INCREMENT"
+        bigint user_id FK "NOT NULL - siswa"
+        bigint company_id FK "NOT NULL"
+        bigint supervisor_id FK "NULLABLE - guru pembimbing"
+        bigint field_supervisor_id FK "NULLABLE - pembimbing lapangan"
+        date start_date "NOT NULL"
+        date end_date "NOT NULL"
+        enum status "pending, approved, rejected, ongoing, completed"
+        text description "NULLABLE"
+        json documents "NULLABLE"
+        text rejection_reason "NULLABLE"
+        decimal final_score "5,2 NULLABLE"
+        date defense_date "NULLABLE"
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    REPORTS {
+        bigint id PK "AUTO_INCREMENT"
+        bigint pkl_id FK "NOT NULL"
+        bigint user_id FK "NOT NULL - pembuat laporan"
+        enum report_type "daily, weekly, monthly, final"
+        string title "NOT NULL"
+        text content "NOT NULL"
+        string file_path "NULLABLE"
+        json attachments "NULLABLE"
+        date report_date "NOT NULL"
+        enum status "draft, submitted, reviewed, approved, rejected"
+        text feedback "NULLABLE - dari pembimbing"
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    EVALUATIONS {
+        bigint id PK "AUTO_INCREMENT"
+        bigint pkl_id FK "NOT NULL"
+        bigint evaluator_id FK "NOT NULL - penilai"
+        enum evaluator_type "supervisor, field_supervisor"
+        decimal technical_score "5,2 NULLABLE"
+        decimal attitude_score "5,2 NULLABLE"
+        decimal communication_score "5,2 NULLABLE"
+        decimal final_score "5,2 NULLABLE"
+        text comments "NULLABLE"
+        text suggestions "NULLABLE"
+        enum status "draft, submitted, approved"
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    MESSAGES {
+        bigint id PK "AUTO_INCREMENT"
+        bigint sender_id FK "NOT NULL"
+        bigint receiver_id FK "NOT NULL"
+        string subject "NOT NULL"
+        text message "NOT NULL"
+        json attachments "NULLABLE"
+        timestamp read_at "NULLABLE"
+        enum priority "low, normal, high"
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    NOTIFICATIONS {
+        bigint id PK "AUTO_INCREMENT"
+        string type "NOT NULL"
+        string notifiable_type "NOT NULL - polymorphic"
+        bigint notifiable_id "NOT NULL - polymorphic"
+        text data "NOT NULL - JSON data"
+        timestamp read_at "NULLABLE"
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    PASSWORD_RESET_TOKENS {
+        string email PK
+        string token "INDEXED"
+        timestamp created_at "NULLABLE"
+        timestamp expires_at "NULLABLE"
+        boolean used "DEFAULT false"
+        string ip_address "NULLABLE"
+        text user_agent "NULLABLE"
+    }
+
+    SESSIONS {
+        string id PK
+        bigint user_id FK "NULLABLE, INDEXED"
+        string ip_address "NULLABLE"
+        text user_agent "NULLABLE"
+        longtext payload "NOT NULL"
+        int last_activity "INDEXED"
+    }
+
+    LOGIN_ATTEMPTS {
+        bigint id PK "AUTO_INCREMENT"
+        string email "INDEXED"
+        string ip_address "45 chars"
+        string user_agent "NULLABLE"
+        boolean successful "DEFAULT false"
+        string failure_reason "NULLABLE"
+        timestamp attempted_at
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    USER_SESSIONS {
+        bigint id PK "AUTO_INCREMENT"
+        bigint user_id FK "NOT NULL"
+        string session_id "NOT NULL"
+        string ip_address "NULLABLE"
+        text user_agent "NULLABLE"
+        timestamp login_at "NOT NULL"
+        timestamp last_activity "NOT NULL"
+        boolean is_active "DEFAULT true"
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    %% Relationships
+    USERS ||--o{ PKLS : "siswa memiliki"
+    USERS ||--o{ PKLS : "guru membimbing (supervisor_id)"
+    USERS ||--o{ PKLS : "pembimbing lapangan (field_supervisor_id)"
+    COMPANIES ||--o{ PKLS : "menerima siswa"
+    
+    PKLS ||--o{ REPORTS : "memiliki laporan"
+    USERS ||--o{ REPORTS : "membuat laporan"
+    
+    PKLS ||--o{ EVALUATIONS : "dievaluasi"
+    USERS ||--o{ EVALUATIONS : "mengevaluasi"
+    
+    USERS ||--o{ MESSAGES : "mengirim (sender)"
+    USERS ||--o{ MESSAGES : "menerima (receiver)"
+    
+    USERS ||--o{ NOTIFICATIONS : "menerima notifikasi (polymorphic)"
+    
+    USERS ||--o{ SESSIONS : "memiliki sesi"
+    USERS ||--o{ USER_SESSIONS : "tracking sesi"

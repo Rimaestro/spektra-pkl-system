@@ -11,20 +11,22 @@
 ])
 
 @php
+use Illuminate\Support\Str;
+
 $inputId = $attributes->get('id', 'input-' . Str::random(6));
 $inputName = $attributes->get('name', '');
 
-$baseClasses = 'block w-full rounded-lg border-neutral-300 dark:border-neutral-600 bg-white dark:bg-neutral-800 text-neutral-900 dark:text-neutral-100 placeholder-neutral-500 dark:placeholder-neutral-400 focus:border-primary-500 focus:ring-primary-500 transition-colors duration-200 sm:text-sm';
+$baseClasses = 'block w-full rounded-lg border-neutral-300 dark:border-neutral-600 bg-white dark:bg-neutral-800 text-neutral-900 dark:text-neutral-100 placeholder-neutral-500 dark:placeholder-neutral-400 focus:border-primary-500 focus:ring-primary-500 transition-colors duration-200 text-base py-3 px-4';
 
 $errorClasses = $error ? 'border-error-300 focus:border-error-500 focus:ring-error-500' : '';
 $disabledClasses = $disabled ? 'opacity-50 cursor-not-allowed' : '';
 
-$iconClasses = $icon ? ($iconPosition === 'left' ? 'pl-10' : 'pr-10') : '';
+$iconClasses = $icon ? ($iconPosition === 'left' ? 'pl-12' : 'pr-12') : '';
 
 $classes = $baseClasses . ' ' . $errorClasses . ' ' . $disabledClasses . ' ' . $iconClasses;
 @endphp
 
-<div class="space-y-1">
+<div class="space-y-2">
     @if($label)
         <label for="{{ $inputId }}" class="block text-sm font-medium text-neutral-700 dark:text-neutral-300">
             {{ $label }}
@@ -36,8 +38,8 @@ $classes = $baseClasses . ' ' . $errorClasses . ' ' . $disabledClasses . ' ' . $
 
     <div class="relative">
         @if($icon)
-            <div class="absolute inset-y-0 {{ $iconPosition === 'left' ? 'left-0 pl-3' : 'right-0 pr-3' }} flex items-center pointer-events-none">
-                <x-icon :name="$icon" size="sm" class="text-neutral-400" />
+            <div class="absolute inset-y-0 {{ $iconPosition === 'left' ? 'left-0 pl-4' : 'right-0 pr-4' }} flex items-center pointer-events-none">
+                <x-icon :name="$icon" size="md" class="text-neutral-400" />
             </div>
         @endif
 

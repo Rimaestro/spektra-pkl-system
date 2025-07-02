@@ -18,20 +18,38 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->enum('role', ['admin', 'koordinator', 'dosen', 'mahasiswa', 'pembimbing_lapangan'])->default('mahasiswa');
-            $table->string('nim')->nullable(); // untuk mahasiswa
-            $table->string('nip')->nullable(); // untuk dosen
+            $table->string('nim')->nullable()->unique(); // untuk mahasiswa
+            $table->string('nip')->nullable()->unique(); // untuk dosen
             $table->string('phone')->nullable();
             $table->text('address')->nullable();
             $table->string('avatar')->nullable();
             $table->enum('status', ['active', 'inactive', 'pending'])->default('pending');
+
+            // Authentication enhancement fields
+            $table->timestamp('last_login_at')->nullable();
+            $table->string('last_login_ip')->nullable();
+            $table->integer('login_attempts')->default(0);
+            $table->timestamp('locked_until')->nullable();
+            $table->timestamp('password_changed_at')->nullable();
+            $table->boolean('force_password_change')->default(false);
+
             $table->rememberToken();
             $table->timestamps();
+
+            // Indexes for better performance
+            $table->index(['role', 'status']);
+            $table->index('email_verified_at');
+            $table->index('last_login_at');
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
             $table->string('email')->primary();
-            $table->string('token');
+            $table->string('token')->index();
             $table->timestamp('created_at')->nullable();
+            $table->timestamp('expires_at')->nullable();
+            $table->boolean('used')->default(false);
+            $table->string('ip_address', 45)->nullable();
+            $table->text('user_agent')->nullable();
         });
 
         Schema::create('sessions', function (Blueprint $table) {
