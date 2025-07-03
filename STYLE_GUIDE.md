@@ -1,15 +1,16 @@
 # SPEKTRA UI Style Guide
 
 ## Overview
-SPEKTRA menggunakan design system modern minimalist yang dibangun dengan Tailwind CSS 4.0 dan Laravel Blade components. Design system ini menekankan pada kesederhanaan, konsistensi, dan accessibility.
+SPEKTRA menggunakan design system modern minimalist dengan pendekatan monochrome (hitam, putih, abu-abu) yang dibangun dengan Tailwind CSS 4.0 dan Laravel Blade components. Design system ini menekankan kesederhanaan, konsistensi, dan aksesibilitas.
 
 ## Design Principles
 
-### 1. Modern Minimalist
+### 1. Modern Minimalist Monochrome
 - Clean dan uncluttered interface
 - Fokus pada content dan functionality
 - Subtle visual elements
 - Consistent white space
+- Gradasi warna netral (putih, abu-abu, hitam)
 
 ### 2. Accessibility First
 - WCAG 2.1 AA compliance
@@ -22,29 +23,41 @@ SPEKTRA menggunakan design system modern minimalist yang dibangun dengan Tailwin
 - Touch-friendly interface elements
 - Optimized untuk mobile performance
 
-## Color Palette
+## Monochrome Color Palette
 
-### Primary Colors
+### Monochrome Colors
 ```css
-primary-50: #f0f9ff
-primary-500: #0ea5e9 (Main brand color)
-primary-600: #0284c7 (Hover states)
-primary-700: #0369a1 (Active states)
+mono-50: #fafafa;
+mono-100: #f5f5f5;
+mono-200: #e5e5e5;
+mono-400: #a3a3a3;
+mono-500: #737373;
+mono-700: #262626;
+mono-900: #171717;
+white: #ffffff;
+black: #0a0a0a;
 ```
 
-### Neutral Colors
+### CSS Variables
 ```css
-neutral-50: #fafafa (Light backgrounds)
-neutral-100: #f5f5f5 (Secondary backgrounds)
-neutral-500: #737373 (Secondary text)
-neutral-900: #171717 (Primary text)
-```
-
-### Semantic Colors
-```css
-success-500: #22c55e (Success states)
-warning-500: #f59e0b (Warning states)
-error-500: #ef4444 (Error states)
+:root {
+  --color-bg: #ffffff;
+  --color-bg-secondary: #fafafa;
+  --color-surface: #f5f5f5;
+  --color-border: #e5e5e5;
+  --color-text-primary: #171717;
+  --color-text-secondary: #525252;
+  --color-text-tertiary: #a3a3a3;
+}
+.dark {
+  --color-bg: #0a0a0a;
+  --color-bg-secondary: #171717;
+  --color-surface: #262626;
+  --color-border: #404040;
+  --color-text-primary: #fafafa;
+  --color-text-secondary: #d4d4d4;
+  --color-text-tertiary: #737373;
+}
 ```
 
 ## Typography
@@ -305,3 +318,68 @@ resources/views/
 - **Images**: Lazy loading implementation
 - **JavaScript**: Minimal vanilla JS for interactions
 - **Bundle Size**: Optimized for production builds
+
+## Komponen Monochrome
+
+### Tombol
+```blade
+<button class="bg-white border border-gray-200 text-gray-900 hover:bg-gray-100 active:bg-gray-200 rounded-lg px-4 py-2">
+  Simpan
+</button>
+```
+
+### Card
+```blade
+<div class="bg-white border border-gray-100 rounded-xl shadow-sm p-6">
+  Konten Card
+</div>
+```
+
+### Input
+```blade
+<input class="w-full px-3 py-2 border border-gray-200 rounded-lg text-gray-900 bg-white placeholder-gray-400" placeholder="Masukkan data">
+```
+
+### Alert
+```blade
+<div class="bg-gray-50 border border-gray-200 text-gray-900 rounded-lg p-4">
+  Pesan alert monochrome
+</div>
+```
+
+## Tips Desain Monochrome
+- Gunakan kontras tinggi antara teks dan background.
+- Manfaatkan white space untuk tampilan lega.
+- Gunakan shadow lembut untuk depth tanpa warna.
+- Icon sebaiknya hitam/abu atau outline saja.
+- Jika ingin aksen, gunakan hanya pada elemen penting (misal: tombol utama) dengan warna brand yang sangat minim.
+
+## Dark Mode
+- Gunakan gradasi abu-abu gelap dan putih untuk teks.
+- Pastikan kontras tetap terjaga.
+
+## Responsive, Layout, dan Komponen Lain
+Tetap gunakan guideline layout, grid, spacing, dan komponen seperti sebelumnya, namun dengan warna-warna monochrome di atas.
+
+## Best Practices
+- Selalu gunakan komponen yang disediakan.
+- Konsisten dalam penggunaan warna dan spacing.
+- Pastikan aksesibilitas dan kontras warna.
+
+## Contoh Palet Monochrome
+```css
+/* Light Mode */
+.bg-white { background-color: #fff; }
+.bg-gray-50 { background-color: #fafafa; }
+.bg-gray-100 { background-color: #f5f5f5; }
+.text-gray-900 { color: #171717; }
+.text-gray-500 { color: #737373; }
+
+/* Dark Mode */
+.dark .bg-gray-900 { background-color: #0a0a0a; }
+.dark .text-white { color: #fafafa; }
+```
+
+---
+
+Dengan pendekatan ini, tampilan aplikasi Anda akan selalu modern, minimalis, dan mudah dikembangkan ke depan.

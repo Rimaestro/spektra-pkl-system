@@ -27,8 +27,8 @@ $typeConfig = [
         'icon' => 'exclamation-triangle',
     ],
     'info' => [
-        'classes' => 'bg-primary-50 border-primary-200 text-primary-800 dark:bg-primary-900/20 dark:border-primary-800 dark:text-primary-200',
-        'iconClasses' => 'text-primary-400',
+        'classes' => 'bg-gray-50 border-gray-200 text-gray-800 dark:bg-gray-900/20 dark:border-gray-800 dark:text-gray-200',
+        'iconClasses' => 'text-gray-400',
         'icon' => 'information-circle',
     ],
 ];

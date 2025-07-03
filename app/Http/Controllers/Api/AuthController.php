@@ -31,17 +31,17 @@ class AuthController extends BaseApiController
                 'name' => ['required', 'string', 'max:255'],
                 'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
                 'password' => ['required', 'confirmed', Rules\Password::defaults()],
-                'role' => ['required', 'string', 'in:mahasiswa,dosen,pembimbing_lapangan'],
-                'nim' => ['nullable', 'string', 'max:20', 'unique:users'],
+                'role' => ['required', 'string', 'in:siswa,dosen,pembimbing_lapangan'],
+                'nis' => ['nullable', 'string', 'max:20', 'unique:users'],
                 'nip' => ['nullable', 'string', 'max:20', 'unique:users'],
                 'phone' => ['nullable', 'string', 'max:20'],
                 'address' => ['nullable', 'string', 'max:500'],
             ]);
 
             // Validate role-specific fields
-            if ($validated['role'] === 'mahasiswa' && empty($validated['nim'])) {
+            if ($validated['role'] === 'siswa' && empty($validated['nis'])) {
                 return $this->validationErrorResponse([
-                    'nim' => ['NIM is required for mahasiswa role']
+                    'nis' => ['NIS is required for siswa role']
                 ]);
             }
 
@@ -56,7 +56,7 @@ class AuthController extends BaseApiController
                 'email' => $validated['email'],
                 'password' => $validated['password'], // Will be hashed by User model
                 'role' => $validated['role'],
-                'nim' => $validated['nim'] ?? null,
+                'nis' => $validated['nis'] ?? null,
                 'nip' => $validated['nip'] ?? null,
                 'phone' => $validated['phone'] ?? null,
                 'address' => $validated['address'] ?? null,
@@ -72,7 +72,7 @@ class AuthController extends BaseApiController
                     'name' => $user->name,
                     'email' => $user->email,
                     'role' => $user->role,
-                    'nim' => $user->nim,
+                    'nis' => $user->nis,
                     'nip' => $user->nip,
                     'phone' => $user->phone,
                     'status' => $user->status,
@@ -148,7 +148,7 @@ class AuthController extends BaseApiController
                     'name' => $user->name,
                     'email' => $user->email,
                     'role' => $user->role,
-                    'nim' => $user->nim,
+                    'nis' => $user->nis,
                     'nip' => $user->nip,
                     'phone' => $user->phone,
                     'status' => $user->status,
@@ -209,7 +209,7 @@ class AuthController extends BaseApiController
             'name' => $user->name,
             'email' => $user->email,
             'role' => $user->role,
-            'nim' => $user->nim,
+            'nis' => $user->nis,
             'nip' => $user->nip,
             'phone' => $user->phone,
             'address' => $user->address,

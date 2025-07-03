@@ -18,7 +18,7 @@ const testUsers = {
     email: 'ahmad.siswa@test.com',
     password: 'Password123!',
     role: 'mahasiswa',
-    nim: '1234567890',
+    nis: '1234567890',
     phone: '081234567890'
   },
   dosen: {
@@ -64,11 +64,11 @@ test.describe('SPEKTRA PKL Authentication E2E Tests', () => {
       await page.fill('input[name="password_confirmation"]', testUsers.siswa.password);
 
       // Select role siswa
-      await page.selectOption('select[name="role"]', 'mahasiswa');
+      await page.selectOption('select[name="role"]', 'siswa');
 
-      // Wait for NIM field to appear (conditional field)
-      await page.waitForSelector('input[name="nim"]', { timeout: 5000 });
-      await page.fill('input[name="nim"]', testUsers.siswa.nim);
+      // Wait for NIS field to appear (conditional field)
+      await page.waitForSelector('input[name="nis"]', { timeout: 5000 });
+      await page.fill('input[name="nis"]', testUsers.siswa.nis);
       await page.fill('input[name="phone"]', testUsers.siswa.phone);
 
       // Accept terms and conditions
@@ -158,16 +158,16 @@ test.describe('SPEKTRA PKL Authentication E2E Tests', () => {
       await expect(page.locator('text=Konfirmasi password tidak cocok')).toBeVisible();
     });
 
-    test('should require NIM for siswa role', async ({ page }) => {
+    test('should require NIS for siswa role', async ({ page }) => {
       await page.click('a[href="/register"]');
 
       await page.fill('input[name="name"]', 'Test Siswa');
       await page.fill('input[name="email"]', 'siswa@test.com');
       await page.fill('input[name="password"]', 'Password123!');
       await page.fill('input[name="password_confirmation"]', 'Password123!');
-      await page.selectOption('select[name="role"]', 'mahasiswa');
+      await page.selectOption('select[name="role"]', 'siswa');
 
-      // Don't fill NIM
+      // Don't fill NIS
       await page.check('input[type="checkbox"]');
       await page.click('button[type="submit"]');
 

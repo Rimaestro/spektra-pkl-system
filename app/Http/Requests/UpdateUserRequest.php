@@ -38,13 +38,13 @@ class UpdateUserRequest extends BaseFormRequest
             'role' => [
                 'sometimes',
                 'string',
-                Rule::in(['admin', 'koordinator', 'dosen', 'mahasiswa', 'pembimbing_lapangan'])
+                Rule::in(['admin', 'koordinator', 'dosen', 'siswa', 'pembimbing_lapangan'])
             ],
-            'nim' => [
+            'nis' => [
                 'nullable',
                 'string',
                 'max:20',
-                Rule::unique('users', 'nim')->ignore($userId)
+                Rule::unique('users', 'nis')->ignore($userId)
             ],
             'nip' => [
                 'nullable',
@@ -72,7 +72,7 @@ class UpdateUserRequest extends BaseFormRequest
             'email.email' => 'Format email tidak valid.',
             'email.unique' => 'Email sudah digunakan.',
             'role.in' => 'Role tidak valid.',
-            'nim.unique' => 'NIM sudah digunakan.',
+            'nis.unique' => 'NIS sudah digunakan.',
             'nip.unique' => 'NIP sudah digunakan.',
             'status.in' => 'Status tidak valid.',
         ];
@@ -88,8 +88,8 @@ class UpdateUserRequest extends BaseFormRequest
             
             if ($role) {
                 // Validate role-specific fields when role is being updated
-                if ($role === 'mahasiswa' && !$this->input('nim')) {
-                    $validator->errors()->add('nim', 'NIM wajib diisi untuk mahasiswa.');
+                if ($role === 'siswa' && !$this->input('nis')) {
+                    $validator->errors()->add('nis', 'NIS wajib diisi untuk siswa.');
                 }
                 
                 if (in_array($role, ['dosen', 'koordinator', 'admin']) && !$this->input('nip')) {

@@ -271,7 +271,7 @@ class UserManagementTest extends TestCase
                 ->assertJsonValidationErrors(['role']);
     }
 
-    public function test_siswa_requires_nim(): void
+    public function test_siswa_requires_nis(): void
     {
         Sanctum::actingAs($this->admin);
 
@@ -280,14 +280,14 @@ class UserManagementTest extends TestCase
             'email' => 'siswa@example.com',
             'password' => 'password123',
             'password_confirmation' => 'password123',
-            'role' => 'mahasiswa'
-            // Missing NIM
+            'role' => 'siswa'
+            // Missing NIS
         ];
 
         $response = $this->postJson('/api/users', $userData);
 
         $response->assertStatus(422)
-                ->assertJsonValidationErrors(['nim']);
+                ->assertJsonValidationErrors(['nis']);
     }
 
     public function test_dosen_requires_nip(): void
@@ -321,7 +321,7 @@ class UserManagementTest extends TestCase
             'password' => 'password123',
             'password_confirmation' => 'password123',
             'role' => 'mahasiswa',
-            'nim' => '1234567890'
+            'nis' => '1234567890'
         ];
 
         $response = $this->postJson('/api/users', $userData);
@@ -330,25 +330,25 @@ class UserManagementTest extends TestCase
                 ->assertJsonValidationErrors(['email']);
     }
 
-    public function test_nim_must_be_unique(): void
+    public function test_nis_must_be_unique(): void
     {
         Sanctum::actingAs($this->admin);
 
-        $existingUser = User::factory()->siswa()->create(['nim' => '1234567890']);
+        $existingUser = User::factory()->siswa()->create(['nis' => '1234567890']);
 
         $userData = [
             'name' => 'Test User',
             'email' => 'test@example.com',
             'password' => 'password123',
             'password_confirmation' => 'password123',
-            'role' => 'mahasiswa',
-            'nim' => '1234567890' // Duplicate NIM
+            'role' => 'siswa',
+            'nis' => '1234567890' // Duplicate NIS
         ];
 
         $response = $this->postJson('/api/users', $userData);
 
         $response->assertStatus(422)
-                ->assertJsonValidationErrors(['nim']);
+                ->assertJsonValidationErrors(['nis']);
     }
 
     public function test_nip_must_be_unique(): void

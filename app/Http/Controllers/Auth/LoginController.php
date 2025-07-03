@@ -42,6 +42,13 @@ class LoginController extends Controller
         $credentials = $request->only('email', 'password');
         $remember = $request->boolean('remember');
 
+        $user = \App\Models\User::where('email', $request->email)->first();
+        if ($user && \Illuminate\Support\Facades\Hash::check($request->password, $user->password)) {
+            if ($user->status !== 'active') {
+                return redirect()->route('login')->with('login_error', 'Akun Anda belum diverifikasi admin. Silakan tunggu persetujuan.');
+            }
+        }
+
         if (Auth::attempt($credentials, $remember)) {
             $request->session()->regenerate();
             RateLimiter::clear($key);

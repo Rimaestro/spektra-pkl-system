@@ -23,7 +23,7 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
-        $role = fake()->randomElement(['mahasiswa', 'dosen', 'pembimbing_lapangan']);
+        $role = fake()->randomElement(['siswa', 'dosen', 'pembimbing_lapangan']);
 
         return [
             'name' => fake()->name(),
@@ -31,7 +31,7 @@ class UserFactory extends Factory
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
             'role' => $role,
-            'nim' => $role === 'mahasiswa' ? fake()->unique()->numerify('2021######') : null,
+            'nis' => $role === 'siswa' ? fake()->unique()->numerify('2021######') : null,
             'nip' => in_array($role, ['dosen', 'koordinator', 'admin']) ? fake()->unique()->numerify('19########') : null,
             'phone' => fake()->phoneNumber(),
             'address' => fake()->address(),
@@ -65,8 +65,8 @@ class UserFactory extends Factory
     public function siswa(): static
     {
         return $this->state(fn (array $attributes) => [
-            'role' => 'mahasiswa',
-            'nim' => fake()->numerify('2021######'),
+            'role' => 'siswa',
+            'nis' => fake()->numerify('2021######'),
             'nip' => null,
         ]);
     }
@@ -78,7 +78,7 @@ class UserFactory extends Factory
     {
         return $this->state(fn (array $attributes) => [
             'role' => 'dosen',
-            'nim' => null,
+            'nis' => null,
             'nip' => fake()->numerify('19########'),
         ]);
     }
@@ -90,7 +90,7 @@ class UserFactory extends Factory
     {
         return $this->state(fn (array $attributes) => [
             'role' => 'pembimbing_lapangan',
-            'nim' => null,
+            'nis' => null,
             'nip' => null,
         ]);
     }
@@ -102,7 +102,7 @@ class UserFactory extends Factory
     {
         return $this->state(fn (array $attributes) => [
             'role' => 'admin',
-            'nim' => null,
+            'nis' => null,
             'nip' => fake()->numerify('19########'),
             'status' => 'active',
         ]);
@@ -115,7 +115,7 @@ class UserFactory extends Factory
     {
         return $this->state(fn (array $attributes) => [
             'role' => 'koordinator',
-            'nim' => null,
+            'nis' => null,
             'nip' => fake()->numerify('19########'),
             'status' => 'active',
         ]);

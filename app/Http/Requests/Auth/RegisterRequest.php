@@ -41,10 +41,6 @@ class RegisterRequest extends FormRequest
                 'confirmed',
                 'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).*$/'
             ],
-            'role' => [
-                'required',
-                'in:mahasiswa,dosen,pembimbing_lapangan'
-            ],
             'phone' => [
                 'nullable',
                 'string',
@@ -58,26 +54,13 @@ class RegisterRequest extends FormRequest
             ]
         ];
 
-        // Role-specific validation
-        if ($this->input('role') === 'mahasiswa') {
-            $rules['nim'] = [
-                'required',
-                'string',
-                'size:10',
-                'unique:users,nim',
-                'regex:/^[0-9]+$/'
-            ];
-        }
-
-        if (in_array($this->input('role'), ['dosen', 'koordinator'])) {
-            $rules['nip'] = [
-                'required',
-                'string',
-                'size:18',
-                'unique:users,nip',
-                'regex:/^[0-9]+$/'
-            ];
-        }
+        $rules['nis'] = [
+            'required',
+            'string',
+            'size:10',
+            'unique:users,nis',
+            'regex:/^[0-9]+$/'
+        ];
 
         return $rules;
     }
@@ -97,16 +80,10 @@ class RegisterRequest extends FormRequest
             'password.min' => 'Password minimal 8 karakter.',
             'password.confirmed' => 'Konfirmasi password tidak cocok.',
             'password.regex' => 'Password harus mengandung huruf besar, huruf kecil, dan angka.',
-            'role.required' => 'Role wajib dipilih.',
-            'role.in' => 'Role tidak valid.',
-            'nim.required' => 'NIM wajib diisi untuk mahasiswa.',
-            'nim.size' => 'NIM harus 10 digit.',
-            'nim.unique' => 'NIM sudah terdaftar.',
-            'nim.regex' => 'NIM hanya boleh berisi angka.',
-            'nip.required' => 'NIP wajib diisi untuk dosen.',
-            'nip.size' => 'NIP harus 18 digit.',
-            'nip.unique' => 'NIP sudah terdaftar.',
-            'nip.regex' => 'NIP hanya boleh berisi angka.',
+            'nis.required' => 'NIS wajib diisi untuk siswa.',
+            'nis.size' => 'NIS harus 10 digit.',
+            'nis.unique' => 'NIS sudah terdaftar.',
+            'nis.regex' => 'NIS hanya boleh berisi angka.',
             'phone.regex' => 'Format nomor telepon tidak valid.',
         ];
     }
@@ -120,9 +97,7 @@ class RegisterRequest extends FormRequest
             'name' => 'nama lengkap',
             'email' => 'email',
             'password' => 'password',
-            'role' => 'role',
-            'nim' => 'NIM',
-            'nip' => 'NIP',
+            'nis' => 'NIS',
             'phone' => 'nomor telepon',
             'address' => 'alamat',
         ];

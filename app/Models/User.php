@@ -25,7 +25,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'email',
         'password',
         'role',
-        'nim',
+        'nis',
         'nip',
         'phone',
         'address',
@@ -58,7 +58,6 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return [
             'email_verified_at' => 'datetime',
-            'password' => 'hashed',
             'last_login_at' => 'datetime',
             'locked_until' => 'datetime',
             'password_changed_at' => 'datetime',
@@ -76,7 +75,7 @@ class User extends Authenticatable implements MustVerifyEmail
             'admin' => 'Administrator',
             'koordinator' => 'Koordinator PKL',
             'dosen' => 'Dosen Pembimbing',
-            'mahasiswa' => 'Siswa',
+            'siswa' => 'Siswa',
             'pembimbing_lapangan' => 'Pembimbing Lapangan'
         ];
 
@@ -93,7 +92,7 @@ class User extends Authenticatable implements MustVerifyEmail
             'admin' => 'Administrator',
             'koordinator' => 'Koordinator PKL',
             'dosen' => 'Dosen Pembimbing',
-            'mahasiswa' => 'Siswa',
+            'siswa' => 'Siswa',
             'pembimbing_lapangan' => 'Pembimbing Lapangan',
             default => 'Unknown'
         };
@@ -133,7 +132,7 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     public function scopeSiswa($query)
     {
-        return $query->where('role', 'mahasiswa');
+        return $query->where('role', 'siswa');
     }
 
     /**
@@ -197,7 +196,7 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     public function isSiswa(): bool
     {
-        return $this->hasRole('mahasiswa');
+        return $this->hasRole('siswa');
     }
 
     /**
@@ -316,16 +315,6 @@ class User extends Authenticatable implements MustVerifyEmail
             'password_changed_at' => now(),
             'force_password_change' => false,
         ]);
-    }
-
-    /**
-     * Hash password when setting
-     */
-    protected function password(): Attribute
-    {
-        return Attribute::make(
-            set: fn (string $value) => Hash::make($value),
-        );
     }
 
     /**
@@ -498,8 +487,6 @@ class User extends Authenticatable implements MustVerifyEmail
         );
     }
 
-
-
     /**
      * Scope for verified users
      */
@@ -507,8 +494,6 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $query->whereNotNull('email_verified_at');
     }
-
-
 
     /**
      * Scope for users who need password change

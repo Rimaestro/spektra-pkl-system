@@ -16,7 +16,7 @@ use Illuminate\Support\Str;
 $inputId = $attributes->get('id', 'input-' . Str::random(6));
 $inputName = $attributes->get('name', '');
 
-$baseClasses = 'block w-full rounded-lg border-neutral-300 dark:border-neutral-600 bg-white dark:bg-neutral-800 text-neutral-900 dark:text-neutral-100 placeholder-neutral-500 dark:placeholder-neutral-400 focus:border-primary-500 focus:ring-primary-500 transition-colors duration-200 text-base py-3 px-4';
+$baseClasses = 'block w-full rounded-lg border border-gray-200 bg-white text-gray-900 placeholder-gray-500 focus:border-gray-900 focus:ring-gray-900 transition-colors duration-200 text-base py-3 px-4';
 
 $errorClasses = $error ? 'border-error-300 focus:border-error-500 focus:ring-error-500' : '';
 $disabledClasses = $disabled ? 'opacity-50 cursor-not-allowed' : '';
@@ -28,11 +28,8 @@ $classes = $baseClasses . ' ' . $errorClasses . ' ' . $disabledClasses . ' ' . $
 
 <div class="space-y-2">
     @if($label)
-        <label for="{{ $inputId }}" class="block text-sm font-medium text-neutral-700 dark:text-neutral-300">
+        <label for="{{ $inputId }}" class="block text-sm font-medium text-gray-900">
             {{ $label }}
-            @if($required)
-                <span class="text-error-500">*</span>
-            @endif
         </label>
     @endif
 

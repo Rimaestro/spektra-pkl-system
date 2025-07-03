@@ -75,13 +75,13 @@ class UserSeeder extends Seeder
             'status' => 'active',
         ]);
 
-        // Mahasiswa
+        // Siswa
         User::create([
             'name' => 'Ahmad Rizki Pratama',
             'email' => 'ahmad.rizki@student.spektra.ac.id',
             'password' => Hash::make('password'),
-            'role' => 'mahasiswa',
-            'nim' => '2021110001',
+            'role' => 'siswa',
+            'nis' => '2021110001',
             'phone' => '085612345678',
             'address' => 'Jl. Kebon Jeruk Raya No. 27, Jakarta Barat, DKI Jakarta 11530',
             'status' => 'active',
@@ -91,8 +91,8 @@ class UserSeeder extends Seeder
             'name' => 'Siti Nurhaliza',
             'email' => 'siti.nurhaliza@student.spektra.ac.id',
             'password' => Hash::make('password'),
-            'role' => 'mahasiswa',
-            'nim' => '2021110002',
+            'role' => 'siswa',
+            'nis' => '2021110002',
             'phone' => '087823456789',
             'address' => 'Jl. Cempaka Putih Tengah No. 15, Jakarta Pusat, DKI Jakarta 10520',
             'status' => 'active',
@@ -102,8 +102,8 @@ class UserSeeder extends Seeder
             'name' => 'Budi Santoso',
             'email' => 'budi.santoso@student.spektra.ac.id',
             'password' => Hash::make('password'),
-            'role' => 'mahasiswa',
-            'nim' => '2021110003',
+            'role' => 'siswa',
+            'nis' => '2021110003',
             'phone' => '089934567890',
             'address' => 'Jl. Pasar Minggu Raya No. 42, Jakarta Selatan, DKI Jakarta 12520',
             'status' => 'active',
@@ -113,8 +113,8 @@ class UserSeeder extends Seeder
             'name' => 'Dewi Lestari',
             'email' => 'dewi.lestari@student.spektra.ac.id',
             'password' => Hash::make('password'),
-            'role' => 'mahasiswa',
-            'nim' => '2021110004',
+            'role' => 'siswa',
+            'nis' => '2021110004',
             'phone' => '081245678901',
             'address' => 'Jl. Kelapa Gading Boulevard No. 88, Jakarta Utara, DKI Jakarta 14240',
             'status' => 'active',
@@ -124,8 +124,8 @@ class UserSeeder extends Seeder
             'name' => 'Reza Firmansyah',
             'email' => 'reza.firmansyah@student.spektra.ac.id',
             'password' => Hash::make('password'),
-            'role' => 'mahasiswa',
-            'nim' => '2021110005',
+            'role' => 'siswa',
+            'nis' => '2021110005',
             'phone' => '082356789012',
             'address' => 'Jl. Cipinang Besar Selatan No. 33, Jakarta Timur, DKI Jakarta 13410',
             'status' => 'active',
@@ -170,8 +170,8 @@ class UserSeeder extends Seeder
             'email' => 'unverified@spektra.ac.id',
             'email_verified_at' => null,
             'password' => Hash::make('password'),
-            'role' => 'mahasiswa',
-            'nim' => '2021999999',
+            'role' => 'siswa',
+            'nis' => '2021999999',
             'phone' => '081999999999',
             'status' => 'pending',
         ]);
@@ -182,8 +182,8 @@ class UserSeeder extends Seeder
             'email' => 'inactive@spektra.ac.id',
             'email_verified_at' => now(),
             'password' => Hash::make('password'),
-            'role' => 'mahasiswa',
-            'nim' => '2021999998',
+            'role' => 'siswa',
+            'nis' => '2021999998',
             'phone' => '081999999998',
             'status' => 'inactive',
         ]);
@@ -203,7 +203,7 @@ class UserSeeder extends Seeder
 
         // Additional sample users for testing
         User::factory(15)->create([
-            'role' => 'mahasiswa',
+            'role' => 'siswa',
             'status' => 'active',
             'email_verified_at' => now(),
             'password_changed_at' => now(),

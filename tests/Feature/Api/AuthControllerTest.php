@@ -20,8 +20,8 @@ class AuthControllerTest extends TestCase
             'email' => 'john@example.com',
             'password' => 'password123',
             'password_confirmation' => 'password123',
-            'role' => 'mahasiswa',
-            'nim' => '123456789',
+            'role' => 'siswa',
+            'nis' => '123456789',
             'phone' => '081234567890',
         ];
 
@@ -32,7 +32,7 @@ class AuthControllerTest extends TestCase
                 'success',
                 'message',
                 'data' => [
-                    'user' => ['id', 'name', 'email', 'role', 'nim'],
+                    'user' => ['id', 'name', 'email', 'role', 'nis'],
                     'token',
                     'token_type'
                 ]
@@ -40,27 +40,27 @@ class AuthControllerTest extends TestCase
 
         $this->assertDatabaseHas('users', [
             'email' => 'john@example.com',
-            'role' => 'mahasiswa',
-            'nim' => '123456789'
+            'role' => 'siswa',
+            'nis' => '123456789'
         ]);
     }
 
     /** @test */
-    public function registration_requires_nim_for_mahasiswa()
+    public function registration_requires_nis_for_siswa()
     {
         $userData = [
             'name' => 'John Doe',
             'email' => 'john@example.com',
             'password' => 'password123',
             'password_confirmation' => 'password123',
-            'role' => 'mahasiswa',
-            // Missing nim
+            'role' => 'siswa',
+            // Missing nis
         ];
 
         $response = $this->postJson('/api/auth/register', $userData);
 
         $response->assertStatus(422)
-            ->assertJsonValidationErrors(['nim']);
+            ->assertJsonValidationErrors(['nis']);
     }
 
     /** @test */
@@ -169,7 +169,7 @@ class AuthControllerTest extends TestCase
         $user = User::factory()->create([
             'name' => 'Test User',
             'email' => 'test@example.com',
-            'role' => 'mahasiswa',
+            'role' => 'siswa',
             'status' => 'active'
         ]);
 
@@ -184,7 +184,7 @@ class AuthControllerTest extends TestCase
                     'id' => $user->id,
                     'name' => 'Test User',
                     'email' => 'test@example.com',
-                    'role' => 'mahasiswa'
+                    'role' => 'siswa'
                 ]
             ]);
     }

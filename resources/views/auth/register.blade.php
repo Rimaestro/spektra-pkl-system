@@ -1,132 +1,119 @@
 @extends('layouts.auth')
 
-@section('title', 'Buat Akun Baru')
-@section('subtitle', 'Daftar untuk memulai perjalanan PKL Anda')
+@section('title', 'Daftar Akun SPEKTRA')
+@section('subtitle', 'Buat akun baru untuk mengakses dashboard PKL Anda')
 
 @section('content')
-<form method="POST" action="{{ route('register') ?? '#' }}" class="space-y-6">
+    <style>
+    .fade-in {
+      animation: fadeIn 0.4s ease-in;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: none; }
+    }
+    .caps-lock-indicator {
+      font-size: 0.85em;
+      color: #dc2626;
+      margin-top: 0.25rem;
+      display: none;
+    }
+    .caps-lock-indicator.active {
+      display: block;
+    }
+    </style>
+    <form method="POST" action="{{ route('register') }}" class="space-y-6 fade-in" id="register-form">
     @csrf
-
-    <!-- Name -->
-    <x-input 
-        type="text" 
-        name="name" 
-        label="Nama Lengkap" 
-        placeholder="Masukkan nama lengkap Anda"
-        icon="user"
-        required 
-        :error="$errors->first('name')"
-        value="{{ old('name') }}"
-    />
-
-    <!-- Email -->
-    <x-input 
-        type="email" 
-        name="email" 
-        label="Email" 
-        placeholder="Masukkan email Anda"
-        icon="user"
-        required 
-        :error="$errors->first('email')"
-        value="{{ old('email') }}"
-        help="Gunakan email aktif untuk verifikasi akun"
-    />
-
-    <!-- Password -->
-    <x-input 
-        type="password" 
-        name="password" 
-        label="Password" 
-        placeholder="Buat password yang kuat"
-        required 
-        :error="$errors->first('password')"
-        help="Minimal 8 karakter dengan kombinasi huruf dan angka"
-    />
-
-    <!-- Confirm Password -->
-    <x-input 
-        type="password" 
-        name="password_confirmation" 
-        label="Konfirmasi Password" 
-        placeholder="Ulangi password Anda"
-        required 
-        :error="$errors->first('password_confirmation')"
-    />
-
-    <!-- Role Selection -->
-    <x-select 
-        name="role" 
-        label="Peran" 
-        placeholder="Pilih peran Anda"
-        required 
-        :error="$errors->first('role')"
-        :options="[
-            'mahasiswa' => 'Siswa PKL',
-            'dosen' => 'Dosen Pembimbing',
-            'pembimbing_lapangan' => 'Pembimbing Lapangan'
-        ]"
-    />
-
-    <!-- Terms and Conditions -->
-    <div class="flex items-start">
-        <div class="flex items-center h-5">
-            <input 
-                id="terms" 
-                name="terms" 
-                type="checkbox" 
+        <div>
+            <x-input
+                id="name"
+                name="name"
+                type="text"
+                label="Nama Lengkap"
+                icon="user"
                 required
-                class="h-4 w-4 text-primary-600 focus:ring-primary-500 border-neutral-300 rounded"
-            >
+                autofocus
+                :error="$errors->first('name')"
+                value="{{ old('name') }}"
+            />
         </div>
-        <div class="ml-3 text-sm">
-            <label for="terms" class="text-neutral-700 dark:text-neutral-300">
-                Saya menyetujui 
-                <a href="#" class="font-medium text-primary-600 hover:text-primary-500 dark:text-primary-400 dark:hover:text-primary-300">
-                    Syarat dan Ketentuan
-                </a> 
-                serta 
-                <a href="#" class="font-medium text-primary-600 hover:text-primary-500 dark:text-primary-400 dark:hover:text-primary-300">
-                    Kebijakan Privasi
-                </a>
-            </label>
+        <div>
+            <x-input
+                id="email"
+                name="email"
+                type="email"
+                label="Email"
+                icon="envelope"
+                required
+                autocomplete="email"
+                :error="$errors->first('email')"
+                value="{{ old('email') }}"
+            />
         </div>
-    </div>
-
-    <!-- Submit Button -->
-    <x-button type="submit" variant="primary" size="lg" class="w-full">
-        Daftar Sekarang
-    </x-button>
-
-    <!-- Divider -->
-    <div class="relative">
-        <div class="absolute inset-0 flex items-center">
-            <div class="w-full border-t border-neutral-300 dark:border-neutral-600"></div>
+        <div>
+            <x-input
+                id="nis"
+                name="nis"
+                type="text"
+                label="NIS"
+                icon="key"
+                :error="$errors->first('nis')"
+                value="{{ old('nis') }}"
+            />
         </div>
-        <div class="relative flex justify-center text-sm">
-            <span class="px-2 bg-white dark:bg-neutral-800 text-neutral-500 dark:text-neutral-400">Atau</span>
+        <div>
+            <x-input
+                id="password"
+                name="password"
+                type="password"
+                label="Password"
+                icon="lock"
+                required
+                autocomplete="new-password"
+                :error="$errors->first('password')"
+                onkeyup="checkCapsLock(event)"
+            />
+            <span id="caps-lock-indicator" class="caps-lock-indicator">Caps Lock aktif</span>
         </div>
-    </div>
-
-    <!-- Social Register (Optional) -->
-    <div class="grid grid-cols-1 gap-3">
-        <x-button variant="outline" size="lg" class="w-full" disabled>
-            <svg class="w-5 h-5 mr-2" viewBox="0 0 24 24">
-                <path fill="currentColor" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
-                <path fill="currentColor" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
-                <path fill="currentColor" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
-                <path fill="currentColor" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
-            </svg>
-            Daftar dengan Google
-        </x-button>
-    </div>
-</form>
-@endsection
-
-@section('footer-links')
-<p class="text-sm text-neutral-600 dark:text-neutral-400">
+        <div>
+            <x-input
+                id="password_confirmation"
+                name="password_confirmation"
+                type="password"
+                label="Konfirmasi Password"
+                icon="lock"
+                required
+                autocomplete="new-password"
+            />
+        </div>
+        <div>
+            <button type="submit" id="register-btn" class="flex w-full justify-center rounded-md bg-gray-900 px-5 py-3 text-base font-semibold text-white shadow-xs hover:bg-gray-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900 transition-all duration-200 disabled:opacity-60">
+                <span id="register-btn-text">Daftar</span>
+                <svg id="register-spinner" class="animate-spin ml-2 h-5 w-5 text-white hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+            </button>
+        </div>
+    </form>
+    <p class="mt-10 text-center text-sm text-gray-500">
     Sudah punya akun? 
-    <a href="{{ route('login') ?? '#' }}" class="font-medium text-primary-600 hover:text-primary-500 dark:text-primary-400 dark:hover:text-primary-300">
-        Masuk sekarang
-    </a>
-</p>
+        <a href="{{ route('login') }}" class="font-semibold text-gray-900 hover:text-gray-700">Masuk</a>
+    </p>
+    <script>
+    function checkCapsLock(e) {
+      const indicator = document.getElementById('caps-lock-indicator');
+      if (e.getModifierState && e.getModifierState('CapsLock')) {
+        indicator.classList.add('active');
+      } else {
+        indicator.classList.remove('active');
+      }
+    }
+    const form = document.getElementById('register-form');
+    const btn = document.getElementById('register-btn');
+    const btnText = document.getElementById('register-btn-text');
+    const spinner = document.getElementById('register-spinner');
+    form.addEventListener('submit', function() {
+      btn.disabled = true;
+      btnText.style.display = 'none';
+      spinner.classList.remove('hidden');
+    });
+    </script>
 @endsection

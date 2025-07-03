@@ -17,8 +17,8 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->enum('role', ['admin', 'koordinator', 'dosen', 'mahasiswa', 'pembimbing_lapangan'])->default('mahasiswa');
-            $table->string('nim')->nullable()->unique(); // untuk mahasiswa
+            $table->enum('role', ['admin', 'koordinator', 'dosen', 'siswa', 'pembimbing_lapangan'])->default('siswa');
+            $table->string('nis')->nullable()->unique(); // untuk siswa
             $table->string('nip')->nullable()->unique(); // untuk dosen
             $table->string('phone')->nullable();
             $table->text('address')->nullable();
@@ -51,15 +51,6 @@ return new class extends Migration
             $table->string('ip_address', 45)->nullable();
             $table->text('user_agent')->nullable();
         });
-
-        Schema::create('sessions', function (Blueprint $table) {
-            $table->string('id')->primary();
-            $table->foreignId('user_id')->nullable()->index();
-            $table->string('ip_address', 45)->nullable();
-            $table->text('user_agent')->nullable();
-            $table->longText('payload');
-            $table->integer('last_activity')->index();
-        });
     }
 
     /**
@@ -69,6 +60,5 @@ return new class extends Migration
     {
         Schema::dropIfExists('users');
         Schema::dropIfExists('password_reset_tokens');
-        Schema::dropIfExists('sessions');
     }
 };

@@ -34,9 +34,9 @@ class CreateUserRequest extends BaseFormRequest
             'role' => [
                 'required',
                 'string',
-                Rule::in(['admin', 'koordinator', 'dosen', 'mahasiswa', 'pembimbing_lapangan'])
+                Rule::in(['admin', 'koordinator', 'dosen', 'siswa', 'pembimbing_lapangan'])
             ],
-            'nim' => 'nullable|string|max:20|unique:users,nim',
+            'nis' => 'nullable|string|max:20|unique:users,nis',
             'nip' => 'nullable|string|max:20|unique:users,nip',
             'phone' => 'nullable|string|max:20',
             'address' => 'nullable|string|max:500',
@@ -62,7 +62,7 @@ class CreateUserRequest extends BaseFormRequest
             'password.confirmed' => 'Konfirmasi password tidak cocok.',
             'role.required' => 'Role wajib dipilih.',
             'role.in' => 'Role tidak valid.',
-            'nim.unique' => 'NIM sudah digunakan.',
+            'nis.unique' => 'NIS sudah digunakan.',
             'nip.unique' => 'NIP sudah digunakan.',
         ];
     }
@@ -76,8 +76,8 @@ class CreateUserRequest extends BaseFormRequest
             $role = $this->input('role');
             
             // Validate role-specific fields
-            if ($role === 'mahasiswa' && !$this->input('nim')) {
-                $validator->errors()->add('nim', 'NIM wajib diisi untuk mahasiswa.');
+            if ($role === 'siswa' && !$this->input('nis')) {
+                $validator->errors()->add('nis', 'NIS wajib diisi untuk siswa.');
             }
             
             if (in_array($role, ['dosen', 'koordinator', 'admin']) && !$this->input('nip')) {
