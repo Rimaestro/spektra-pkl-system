@@ -54,7 +54,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
     // Koordinator routes
-    Route::middleware('auth')->prefix('koordinator')->name('koordinator.')->group(function () {
+    Route::middleware(['auth', 'role:koordinator'])->prefix('koordinator')->name('koordinator.')->group(function () {
         Route::get('/dashboard', [KoordinatorController::class, 'dashboard'])->name('dashboard');
         
         // Manajemen Siswa PKL
